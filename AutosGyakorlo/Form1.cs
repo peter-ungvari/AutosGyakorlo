@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace AutosGyakorlo
 {
-    public partial class Form1 : Form
+    public partial class JarmuForm : Form
     {
         JarmuAdatbazisKezelo ak = new JarmuAdatbazisKezelo();
 
-        public Form1()
+        public JarmuForm()
         {
             InitializeComponent();
         }
@@ -40,14 +40,55 @@ namespace AutosGyakorlo
                 ak.Beszur(jarmu);
             }
 
-            listBox1.DataSource = ak.KisteherGepjarmuListaz();
-            listBox2.DataSource = ak.SzemelyGepjarmuListaz();
+            Frissit();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            listBox1.Items.AddRange(ak.KisteherGepjarmuListaz().ToArray());
-            listBox2.Items.AddRange(ak.SzemelyGepjarmuListaz().ToArray());
+            comboBox1.SelectedIndex = 0;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Frissit();
+        }
+
+        private void Frissit()
+        {
+            if (comboBox1.SelectedIndex == 0)
+            {
+                listBox1.DataSource = ak.SzemelyGepjarmuListaz();
+            }
+            else
+            {
+                listBox1.DataSource = ak.KisteherGepjarmuListaz();
+            }
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem is SzemelyGepjarmu)
+            {
+                SzemelyGepjarmu sz = listBox1.SelectedItem as SzemelyGepjarmu;
+                ak.Torol(sz);
+            }
+            else if (listBox1.SelectedItem is KisteherGepjarmu)
+            {
+                KisteherGepjarmu k = listBox1.SelectedItem as KisteherGepjarmu;
+                ak.Torol(k);
+            }
+
+            Frissit();
+        }
+
+        private void listBox1_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem != null)
+            {
+                Jarmu jarmu = listBox1.SelectedItem as Jarmu;
+                MessageBox.Show(this, String.Format("Ár: {0}", jarmu.Ar()), String.Format("{0} {1}", jarmu.Marka, jarmu.Tipus), 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
     }

@@ -13,11 +13,16 @@ namespace AutosGyakorlo
     class JarmuAdatbazisKezelo
     {
 
+        // Table adapterek.
+        // Ha kiír hibát a program, akkor az azért van, mert más a DataSet-ed neve, nem Database1DataSet.
+        // A generált DataSet osztályod nevét a Data Sources ablakban látod bal oldalon.
+        // Ha nincs ott semmi, létre kell egyet hozni az első ikonnal, majd Next > Next > Tables alatt mindent kiválaszt > Finish.
         Database1DataSetTableAdapters.JarmuTableAdapter jta = new Database1DataSetTableAdapters.JarmuTableAdapter();
         Database1DataSetTableAdapters.SzemelyGepjarmuTableAdapter szta = new Database1DataSetTableAdapters.SzemelyGepjarmuTableAdapter();
         Database1DataSetTableAdapters.KisteherGepjarmuTableAdapter kta = new Database1DataSetTableAdapters.KisteherGepjarmuTableAdapter();
         Database1DataSetTableAdapters.TableAdapterManager tam = new Database1DataSetTableAdapters.TableAdapterManager();
 
+        // Konstruktor. Ezt létre kell hozni és benne a TableAdapterManager adatait (tam) beállítani.
         public JarmuAdatbazisKezelo()
         {
             tam.UpdateOrder = Database1DataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
@@ -28,9 +33,14 @@ namespace AutosGyakorlo
 
         public void Beszur(Jarmu jarmu)
         {
-            Database1DataSet dataset = new Database1DataSet();
+            //üres DataSet létrehozása, ez egy tároló. Ennek is táblái, sorai lehetnek, mint az adatbázisnak.
+            //a tartalmát fogjuk majd bepakolni az adatbázisba.
+            Database1DataSet dataset = new Database1DataSet(); 
 
+            //új JarmuRow sor létrehozása, amit be lehet majd tenni a DataSet Jarmu táblájába
             Database1DataSet.JarmuRow jarmuRow = dataset.Jarmu.NewJarmuRow();
+
+            //alap adatok feltöltése az új JarmuRow sorba
             jarmuRow.alvazszam = jarmu.Alvazszam;
             jarmuRow.futottKm = jarmu.FutottKm;
             jarmuRow.hasznosTeher = jarmu.HasznosTeher;
@@ -39,51 +49,72 @@ namespace AutosGyakorlo
             jarmuRow.rendszam = jarmu.Rendszam;
             jarmuRow.szallithatoSzemelyek = jarmu.SzallithatoSzemelyek;
             jarmuRow.tipus = jarmu.Tipus;
+
+            //a feltöltött sor hozzáadása a DataSet Jarmu táblájához
             dataset.Jarmu.Rows.Add(jarmuRow);
 
-            if (jarmu is SzemelyGepjarmu)
+            if (jarmu is SzemelyGepjarmu) //ha a jarmu SzemelyGepjarmu
             {
-                SzemelyGepjarmu sz = jarmu as SzemelyGepjarmu;
+                SzemelyGepjarmu sz = jarmu as SzemelyGepjarmu; //átalakítás SzemelyGepjarmu típusra, az lesz az "sz"
+
+                //új SzemelyGepjarmuRow sor létrehozása, amit be lehet majd tenni a DataSet SzemelyGepjarmu táblájába
                 Database1DataSet.SzemelyGepjarmuRow row = dataset.SzemelyGepjarmu.NewSzemelyGepjarmuRow();
-                row.felszereltseg = sz.Felszereltseg.ToString();
+
+                //SzemelyGepjarmu adatok feltöltése az új SzemelyGepjarmuRow sorba
+                row.felszereltseg = (int)sz.Felszereltseg;
                 row.hangredszer = Convert.ToInt32(sz.Hangredszer);
                 row.jarmuId = jarmuRow.Id;
+
+                //a feltöltött sor hozzáadása a DataSet SzemelyGepjarmu táblájához
                 dataset.SzemelyGepjarmu.Rows.Add(row);
 
             }
-            else if (jarmu is KisteherGepjarmu)
+            else if (jarmu is KisteherGepjarmu) //ha a jarmu KisteherGepjarmu
             {
                 KisteherGepjarmu k = jarmu as KisteherGepjarmu;
                 Database1DataSet.KisteherGepjarmuRow row = dataset.KisteherGepjarmu.NewKisteherGepjarmuRow();
-                row.kialakitas = k.Kialakitas.ToString();
+                row.kialakitas = (int)k.Kialakitas;
                 row.onsuly = Convert.ToInt32(k.Onsuly);
                 row.jarmuId = jarmuRow.Id;
                 dataset.KisteherGepjarmu.Rows.Add(row);
 
             }
 
+            //a DataSet adatainak beszúrása a valódi adatbázisba
             tam.UpdateAll(dataset);
         }
 
         public List<SzemelyGepjarmu> SzemelyGepjarmuListaz()
         {
+            // Üres DataSet létrehozása
             Database1DataSet dataset = new Database1DataSet();
+
+            // Jarmu tábla betöltése az adatbázisból a DataSet Jarmu táblájába
             jta.Fill(dataset.Jarmu);
+
+            // SzemelyGepjarmu tábla betöltése az adatbázisból a DataSet SzemelyGepjarmu táblájába
             szta.Fill(dataset.SzemelyGepjarmu);
+
+            // Üres lista létrehozása, ebbe pakoljuk az eredményhez szükséges SzemelyGepjarmu-ket
             List<SzemelyGepjarmu> jarmuvek = new List<SzemelyGepjarmu>();
 
+            // Végigmegyünk a DataSet sorain és mindegyikből egy SzemelyGepjarmu-t csinálunk
             foreach (Database1DataSet.SzemelyGepjarmuRow row in dataset.SzemelyGepjarmu.Rows)
             {
                 Database1DataSet.JarmuRow jarmuRow = row.JarmuRow;
+
+                // Létrehozunk egy új SzemelyGepjarmu-t, hogy beletegyük a sorból az adatokat
                 SzemelyGepjarmu sz = new SzemelyGepjarmu();
 
                 JarmuInicializalas(sz, jarmuRow);
+
+                sz.Azon = row.Id;
                 sz.Hangredszer = Convert.ToBoolean(row.hangredszer);
 
-                Felszereltseg f;
-                Felszereltseg.TryParse(row.felszereltseg, out f);
-                sz.Felszereltseg = f;
+                // int átalakítása enummá
+                sz.Felszereltseg = (Felszereltseg)row.felszereltseg;
 
+                // Hozzáadjuk a kész feltöltött SzemelyGepjarmu-t az eredménylistához.
                 jarmuvek.Add(sz);
             }
 
@@ -104,9 +135,10 @@ namespace AutosGyakorlo
 
                 JarmuInicializalas(k, jarmuRow);
 
-                Kialakitas kia;
-                Kialakitas.TryParse(row.kialakitas, out kia);
-                k.Kialakitas = kia;
+                k.Azon = row.Id;
+
+                // int átalakítása enummá
+                k.Kialakitas = (Kialakitas)row.kialakitas;
 
                 k.Onsuly = row.onsuly;
 
@@ -118,6 +150,7 @@ namespace AutosGyakorlo
 
         private void JarmuInicializalas(Jarmu jarmu, Database1DataSet.JarmuRow jarmuRow)
         {
+            jarmu.JarmuAzon = jarmuRow.Id;
             jarmu.Tipus = jarmuRow.tipus;
             jarmu.Marka = jarmuRow.marka;
             jarmu.FutottKm = jarmuRow.futottKm;
@@ -128,5 +161,14 @@ namespace AutosGyakorlo
             jarmu.Alvazszam = jarmuRow.alvazszam;
         }
 
+        internal void Torol(SzemelyGepjarmu sz)
+        {
+            szta.Delete(sz.Azon, sz.JarmuAzon, (int)sz.Felszereltseg, Convert.ToInt32(sz.Hangredszer));
+        }
+
+        internal void Torol(KisteherGepjarmu k)
+        {
+            kta.Delete(k.Azon, k.JarmuAzon, (int)k.Kialakitas, k.Onsuly);
+        }
     }
 }

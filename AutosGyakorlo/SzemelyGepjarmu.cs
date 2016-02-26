@@ -15,6 +15,14 @@ namespace AutosGyakorlo
 
     class SzemelyGepjarmu: Jarmu
     {
+        int azon;
+
+        public int Azon
+        {
+            get { return azon; }
+            set { azon = value; }
+        }
+
         Felszereltseg felszereltseg;
 
         public Felszereltseg Felszereltseg
@@ -34,7 +42,7 @@ namespace AutosGyakorlo
         //A Jarmu Ar funkcióját felülírja (override)
         override public long Ar()
         {
-            long alapAr = 1 / FutottKm * 500000;
+            long alapAr = (long)(1.0 / FutottKm * 500000);
 
             long ar;
 

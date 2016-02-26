@@ -30,9 +30,9 @@ namespace AutosGyakorlo {
         
         private SzemelyGepjarmuDataTable tableSzemelyGepjarmu;
         
-        private global::System.Data.DataRelation relationFK_KisteherGepjarmu_Jarmu;
-        
         private global::System.Data.DataRelation relationFK_SzemelyGepjarmu_Jarmu;
+        
+        private global::System.Data.DataRelation relationFK_KisteherGepjarmu_Jarmu;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -246,8 +246,8 @@ namespace AutosGyakorlo {
                     this.tableSzemelyGepjarmu.InitVars();
                 }
             }
-            this.relationFK_KisteherGepjarmu_Jarmu = this.Relations["FK_KisteherGepjarmu_Jarmu"];
             this.relationFK_SzemelyGepjarmu_Jarmu = this.Relations["FK_SzemelyGepjarmu_Jarmu"];
+            this.relationFK_KisteherGepjarmu_Jarmu = this.Relations["FK_KisteherGepjarmu_Jarmu"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -270,25 +270,25 @@ namespace AutosGyakorlo {
                         this.tableKisteherGepjarmu.jarmuIdColumn});
             this.tableKisteherGepjarmu.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_SzemelyGepjarmu_Jarmu", new global::System.Data.DataColumn[] {
                         this.tableJarmu.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableSzemelyGepjarmu.jarmuIdColumn});
             this.tableSzemelyGepjarmu.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            this.relationFK_KisteherGepjarmu_Jarmu = new global::System.Data.DataRelation("FK_KisteherGepjarmu_Jarmu", new global::System.Data.DataColumn[] {
-                        this.tableJarmu.IdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableKisteherGepjarmu.jarmuIdColumn}, false);
-            this.relationFK_KisteherGepjarmu_Jarmu.Nested = true;
-            this.Relations.Add(this.relationFK_KisteherGepjarmu_Jarmu);
             this.relationFK_SzemelyGepjarmu_Jarmu = new global::System.Data.DataRelation("FK_SzemelyGepjarmu_Jarmu", new global::System.Data.DataColumn[] {
                         this.tableJarmu.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableSzemelyGepjarmu.jarmuIdColumn}, false);
             this.relationFK_SzemelyGepjarmu_Jarmu.Nested = true;
             this.Relations.Add(this.relationFK_SzemelyGepjarmu_Jarmu);
+            this.relationFK_KisteherGepjarmu_Jarmu = new global::System.Data.DataRelation("FK_KisteherGepjarmu_Jarmu", new global::System.Data.DataColumn[] {
+                        this.tableJarmu.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableKisteherGepjarmu.jarmuIdColumn}, false);
+            this.relationFK_KisteherGepjarmu_Jarmu.Nested = true;
+            this.Relations.Add(this.relationFK_KisteherGepjarmu_Jarmu);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -876,7 +876,7 @@ namespace AutosGyakorlo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KisteherGepjarmuRow AddKisteherGepjarmuRow(JarmuRow parentJarmuRowByFK_KisteherGepjarmu_Jarmu, string kialakitas, int onsuly) {
+            public KisteherGepjarmuRow AddKisteherGepjarmuRow(JarmuRow parentJarmuRowByFK_KisteherGepjarmu_Jarmu, int kialakitas, int onsuly) {
                 KisteherGepjarmuRow rowKisteherGepjarmuRow = ((KisteherGepjarmuRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -928,7 +928,7 @@ namespace AutosGyakorlo {
                 base.Columns.Add(this.columnId);
                 this.columnjarmuId = new global::System.Data.DataColumn("jarmuId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnjarmuId);
-                this.columnkialakitas = new global::System.Data.DataColumn("kialakitas", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnkialakitas = new global::System.Data.DataColumn("kialakitas", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnkialakitas);
                 this.columnonsuly = new global::System.Data.DataColumn("onsuly", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnonsuly);
@@ -942,7 +942,6 @@ namespace AutosGyakorlo {
                 this.columnId.Unique = true;
                 this.columnjarmuId.AllowDBNull = false;
                 this.columnkialakitas.AllowDBNull = false;
-                this.columnkialakitas.MaxLength = 50;
                 this.columnonsuly.AllowDBNull = false;
             }
             
@@ -1187,7 +1186,7 @@ namespace AutosGyakorlo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SzemelyGepjarmuRow AddSzemelyGepjarmuRow(JarmuRow parentJarmuRowByFK_SzemelyGepjarmu_Jarmu, string felszereltseg, int hangredszer) {
+            public SzemelyGepjarmuRow AddSzemelyGepjarmuRow(JarmuRow parentJarmuRowByFK_SzemelyGepjarmu_Jarmu, int felszereltseg, int hangredszer) {
                 SzemelyGepjarmuRow rowSzemelyGepjarmuRow = ((SzemelyGepjarmuRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1239,7 +1238,7 @@ namespace AutosGyakorlo {
                 base.Columns.Add(this.columnId);
                 this.columnjarmuId = new global::System.Data.DataColumn("jarmuId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnjarmuId);
-                this.columnfelszereltseg = new global::System.Data.DataColumn("felszereltseg", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnfelszereltseg = new global::System.Data.DataColumn("felszereltseg", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfelszereltseg);
                 this.columnhangredszer = new global::System.Data.DataColumn("hangredszer", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnhangredszer);
@@ -1253,7 +1252,6 @@ namespace AutosGyakorlo {
                 this.columnId.Unique = true;
                 this.columnjarmuId.AllowDBNull = false;
                 this.columnfelszereltseg.AllowDBNull = false;
-                this.columnfelszereltseg.MaxLength = 50;
                 this.columnhangredszer.AllowDBNull = false;
             }
             
@@ -1496,23 +1494,23 @@ namespace AutosGyakorlo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KisteherGepjarmuRow[] GetKisteherGepjarmuRows() {
-                if ((this.Table.ChildRelations["FK_KisteherGepjarmu_Jarmu"] == null)) {
-                    return new KisteherGepjarmuRow[0];
-                }
-                else {
-                    return ((KisteherGepjarmuRow[])(base.GetChildRows(this.Table.ChildRelations["FK_KisteherGepjarmu_Jarmu"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SzemelyGepjarmuRow[] GetSzemelyGepjarmuRows() {
                 if ((this.Table.ChildRelations["FK_SzemelyGepjarmu_Jarmu"] == null)) {
                     return new SzemelyGepjarmuRow[0];
                 }
                 else {
                     return ((SzemelyGepjarmuRow[])(base.GetChildRows(this.Table.ChildRelations["FK_SzemelyGepjarmu_Jarmu"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public KisteherGepjarmuRow[] GetKisteherGepjarmuRows() {
+                if ((this.Table.ChildRelations["FK_KisteherGepjarmu_Jarmu"] == null)) {
+                    return new KisteherGepjarmuRow[0];
+                }
+                else {
+                    return ((KisteherGepjarmuRow[])(base.GetChildRows(this.Table.ChildRelations["FK_KisteherGepjarmu_Jarmu"])));
                 }
             }
         }
@@ -1555,9 +1553,9 @@ namespace AutosGyakorlo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string kialakitas {
+            public int kialakitas {
                 get {
-                    return ((string)(this[this.tableKisteherGepjarmu.kialakitasColumn]));
+                    return ((int)(this[this.tableKisteherGepjarmu.kialakitasColumn]));
                 }
                 set {
                     this[this.tableKisteherGepjarmu.kialakitasColumn] = value;
@@ -1625,9 +1623,9 @@ namespace AutosGyakorlo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string felszereltseg {
+            public int felszereltseg {
                 get {
-                    return ((string)(this[this.tableSzemelyGepjarmu.felszereltsegColumn]));
+                    return ((int)(this[this.tableSzemelyGepjarmu.felszereltsegColumn]));
                 }
                 set {
                     this[this.tableSzemelyGepjarmu.felszereltsegColumn] = value;
@@ -2372,7 +2370,7 @@ SELECT Id, marka, tipus, futottKm, hengerurt, rendszam, alvazszam, szallithatoSz
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_jarmuId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "jarmuId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_kialakitas", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "kialakitas", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_kialakitas", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "kialakitas", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_onsuly", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "onsuly", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
@@ -2381,7 +2379,7 @@ SELECT Id, marka, tipus, futottKm, hengerurt, rendszam, alvazszam, szallithatoSz
                 "steherGepjarmu WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@jarmuId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "jarmuId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@kialakitas", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "kialakitas", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@kialakitas", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "kialakitas", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@onsuly", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "onsuly", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
@@ -2389,11 +2387,11 @@ SELECT Id, marka, tipus, futottKm, hengerurt, rendszam, alvazszam, szallithatoSz
 SELECT Id, jarmuId, kialakitas, onsuly FROM KisteherGepjarmu WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@jarmuId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "jarmuId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@kialakitas", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "kialakitas", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@kialakitas", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "kialakitas", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@onsuly", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "onsuly", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_jarmuId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "jarmuId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_kialakitas", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "kialakitas", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_kialakitas", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "kialakitas", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_onsuly", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "onsuly", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -2472,15 +2470,10 @@ SELECT Id, jarmuId, kialakitas, onsuly FROM KisteherGepjarmu WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, int Original_jarmuId, string Original_kialakitas, int Original_onsuly) {
+        public virtual int Delete(int Original_Id, int Original_jarmuId, int Original_kialakitas, int Original_onsuly) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_jarmuId));
-            if ((Original_kialakitas == null)) {
-                throw new global::System.ArgumentNullException("Original_kialakitas");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_kialakitas));
-            }
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_kialakitas));
             this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_onsuly));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -2502,14 +2495,9 @@ SELECT Id, jarmuId, kialakitas, onsuly FROM KisteherGepjarmu WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int jarmuId, string kialakitas, int onsuly) {
+        public virtual int Insert(int jarmuId, int kialakitas, int onsuly) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(jarmuId));
-            if ((kialakitas == null)) {
-                throw new global::System.ArgumentNullException("kialakitas");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(kialakitas));
-            }
+            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(kialakitas));
             this.Adapter.InsertCommand.Parameters[2].Value = ((int)(onsuly));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -2531,23 +2519,13 @@ SELECT Id, jarmuId, kialakitas, onsuly FROM KisteherGepjarmu WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int jarmuId, string kialakitas, int onsuly, int Original_Id, int Original_jarmuId, string Original_kialakitas, int Original_onsuly, int Id) {
+        public virtual int Update(int jarmuId, int kialakitas, int onsuly, int Original_Id, int Original_jarmuId, int Original_kialakitas, int Original_onsuly, int Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(jarmuId));
-            if ((kialakitas == null)) {
-                throw new global::System.ArgumentNullException("kialakitas");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(kialakitas));
-            }
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(kialakitas));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(onsuly));
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_Id));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_jarmuId));
-            if ((Original_kialakitas == null)) {
-                throw new global::System.ArgumentNullException("Original_kialakitas");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_kialakitas));
-            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_kialakitas));
             this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_onsuly));
             this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
@@ -2570,7 +2548,7 @@ SELECT Id, jarmuId, kialakitas, onsuly FROM KisteherGepjarmu WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int jarmuId, string kialakitas, int onsuly, int Original_Id, int Original_jarmuId, string Original_kialakitas, int Original_onsuly) {
+        public virtual int Update(int jarmuId, int kialakitas, int onsuly, int Original_Id, int Original_jarmuId, int Original_kialakitas, int Original_onsuly) {
             return this.Update(jarmuId, kialakitas, onsuly, Original_Id, Original_jarmuId, Original_kialakitas, Original_onsuly, Original_Id);
         }
     }
@@ -2709,7 +2687,7 @@ SELECT Id, jarmuId, kialakitas, onsuly FROM KisteherGepjarmu WHERE (Id = @Id)";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_jarmuId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "jarmuId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_felszereltseg", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "felszereltseg", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_felszereltseg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "felszereltseg", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_hangredszer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hangredszer", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
@@ -2718,7 +2696,7 @@ SELECT Id, jarmuId, kialakitas, onsuly FROM KisteherGepjarmu WHERE (Id = @Id)";
                 "eg, hangredszer FROM SzemelyGepjarmu WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@jarmuId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "jarmuId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@felszereltseg", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "felszereltseg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@felszereltseg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "felszereltseg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@hangredszer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hangredszer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
@@ -2726,11 +2704,11 @@ SELECT Id, jarmuId, kialakitas, onsuly FROM KisteherGepjarmu WHERE (Id = @Id)";
 SELECT Id, jarmuId, felszereltseg, hangredszer FROM SzemelyGepjarmu WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@jarmuId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "jarmuId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@felszereltseg", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "felszereltseg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@felszereltseg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "felszereltseg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@hangredszer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hangredszer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_jarmuId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "jarmuId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_felszereltseg", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "felszereltseg", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_felszereltseg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "felszereltseg", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_hangredszer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hangredszer", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -2809,15 +2787,10 @@ SELECT Id, jarmuId, felszereltseg, hangredszer FROM SzemelyGepjarmu WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, int Original_jarmuId, string Original_felszereltseg, int Original_hangredszer) {
+        public virtual int Delete(int Original_Id, int Original_jarmuId, int Original_felszereltseg, int Original_hangredszer) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_jarmuId));
-            if ((Original_felszereltseg == null)) {
-                throw new global::System.ArgumentNullException("Original_felszereltseg");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_felszereltseg));
-            }
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_felszereltseg));
             this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_hangredszer));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -2839,14 +2812,9 @@ SELECT Id, jarmuId, felszereltseg, hangredszer FROM SzemelyGepjarmu WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int jarmuId, string felszereltseg, int hangredszer) {
+        public virtual int Insert(int jarmuId, int felszereltseg, int hangredszer) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(jarmuId));
-            if ((felszereltseg == null)) {
-                throw new global::System.ArgumentNullException("felszereltseg");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(felszereltseg));
-            }
+            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(felszereltseg));
             this.Adapter.InsertCommand.Parameters[2].Value = ((int)(hangredszer));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -2868,23 +2836,13 @@ SELECT Id, jarmuId, felszereltseg, hangredszer FROM SzemelyGepjarmu WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int jarmuId, string felszereltseg, int hangredszer, int Original_Id, int Original_jarmuId, string Original_felszereltseg, int Original_hangredszer, int Id) {
+        public virtual int Update(int jarmuId, int felszereltseg, int hangredszer, int Original_Id, int Original_jarmuId, int Original_felszereltseg, int Original_hangredszer, int Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(jarmuId));
-            if ((felszereltseg == null)) {
-                throw new global::System.ArgumentNullException("felszereltseg");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(felszereltseg));
-            }
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(felszereltseg));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(hangredszer));
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_Id));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_jarmuId));
-            if ((Original_felszereltseg == null)) {
-                throw new global::System.ArgumentNullException("Original_felszereltseg");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_felszereltseg));
-            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_felszereltseg));
             this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_hangredszer));
             this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
@@ -2907,7 +2865,7 @@ SELECT Id, jarmuId, felszereltseg, hangredszer FROM SzemelyGepjarmu WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int jarmuId, string felszereltseg, int hangredszer, int Original_Id, int Original_jarmuId, string Original_felszereltseg, int Original_hangredszer) {
+        public virtual int Update(int jarmuId, int felszereltseg, int hangredszer, int Original_Id, int Original_jarmuId, int Original_felszereltseg, int Original_hangredszer) {
             return this.Update(jarmuId, felszereltseg, hangredszer, Original_Id, Original_jarmuId, Original_felszereltseg, Original_hangredszer, Original_Id);
         }
     }
@@ -3060,21 +3018,21 @@ SELECT Id, jarmuId, felszereltseg, hangredszer FROM SzemelyGepjarmu WHERE (Id = 
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._kisteherGepjarmuTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.KisteherGepjarmu.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._kisteherGepjarmuTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._szemelyGepjarmuTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.SzemelyGepjarmu.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._szemelyGepjarmuTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._kisteherGepjarmuTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.KisteherGepjarmu.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._kisteherGepjarmuTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -3096,19 +3054,19 @@ SELECT Id, jarmuId, felszereltseg, hangredszer FROM SzemelyGepjarmu WHERE (Id = 
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._kisteherGepjarmuTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.KisteherGepjarmu.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._kisteherGepjarmuTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._szemelyGepjarmuTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.SzemelyGepjarmu.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._szemelyGepjarmuTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._kisteherGepjarmuTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.KisteherGepjarmu.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._kisteherGepjarmuTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -3122,19 +3080,19 @@ SELECT Id, jarmuId, felszereltseg, hangredszer FROM SzemelyGepjarmu WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateDeletedRows(Database1DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._szemelyGepjarmuTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.SzemelyGepjarmu.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._szemelyGepjarmuTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._kisteherGepjarmuTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.KisteherGepjarmu.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._kisteherGepjarmuTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._szemelyGepjarmuTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.SzemelyGepjarmu.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._szemelyGepjarmuTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

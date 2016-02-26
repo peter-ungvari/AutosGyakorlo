@@ -16,7 +16,15 @@ namespace AutosGyakorlo
     
     class KisteherGepjarmu : Jarmu
     {
- 
+
+        int azon;
+
+        public int Azon
+        {
+            get { return azon; }
+            set { azon = value; }
+        }
+
         Kialakitas kialakitas;
 
         public Kialakitas Kialakitas
@@ -42,7 +50,7 @@ namespace AutosGyakorlo
         //A Jarmu Ar funkcióját felülírja (override)
         override public long Ar()
         {
-            return 1 / FutottKm * 10000000;
+            return (long)(1.0 / FutottKm * 10000000);
         }
 
         public override string ToString()
