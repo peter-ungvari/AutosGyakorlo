@@ -12,19 +12,11 @@ namespace AutosGyakorlo
 {
     public partial class Form1 : Form
     {
+        JarmuAdatbazisKezelo ak = new JarmuAdatbazisKezelo();
+
         public Form1()
         {
             InitializeComponent();
-
-            CsvOlvaso o = new CsvOlvaso();
-            List<Jarmu> jarmuvek = o.Beolvas("Gyakorlo_adatok.csv");
-            JarmuAdatbazisKezelo ak = new JarmuAdatbazisKezelo();
-            
-            foreach (Jarmu jarmu in jarmuvek)
-            {
-                ak.Beszur(jarmu);
-            }
-            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -37,19 +29,26 @@ namespace AutosGyakorlo
             }
         }
 
-        private void jarmuBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            this.Validate();
-            this.jarmuBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.database1DataSet);
+            CsvOlvaso o = new CsvOlvaso();
+            List<Jarmu> jarmuvek = o.Beolvas("Gyakorlo_adatok.csv");
+            
 
+            foreach (Jarmu jarmu in jarmuvek)
+            {
+                ak.Beszur(jarmu);
+            }
+
+            listBox1.DataSource = ak.KisteherGepjarmuListaz();
+            listBox2.DataSource = ak.SzemelyGepjarmuListaz();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'database1DataSet.Jarmu' table. You can move, or remove it, as needed.
-            this.jarmuTableAdapter.Fill(this.database1DataSet.Jarmu);
-
+            listBox1.Items.AddRange(ak.KisteherGepjarmuListaz().ToArray());
+            listBox2.Items.AddRange(ak.SzemelyGepjarmuListaz().ToArray());
         }
+
     }
 }

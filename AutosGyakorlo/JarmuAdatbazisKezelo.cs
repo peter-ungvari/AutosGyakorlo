@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,19 @@ namespace AutosGyakorlo
 {
     class JarmuAdatbazisKezelo
     {
+
+        Database1DataSetTableAdapters.JarmuTableAdapter jta = new Database1DataSetTableAdapters.JarmuTableAdapter();
+        Database1DataSetTableAdapters.SzemelyGepjarmuTableAdapter szta = new Database1DataSetTableAdapters.SzemelyGepjarmuTableAdapter();
+        Database1DataSetTableAdapters.KisteherGepjarmuTableAdapter kta = new Database1DataSetTableAdapters.KisteherGepjarmuTableAdapter();
+        Database1DataSetTableAdapters.TableAdapterManager tam = new Database1DataSetTableAdapters.TableAdapterManager();
+
+        public JarmuAdatbazisKezelo()
+        {
+            tam.UpdateOrder = Database1DataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            tam.SzemelyGepjarmuTableAdapter = szta;
+            tam.JarmuTableAdapter = jta;
+            tam.KisteherGepjarmuTableAdapter = kta;
+        }
 
         public void Beszur(Jarmu jarmu)
         {
@@ -34,6 +49,7 @@ namespace AutosGyakorlo
                 row.hangredszer = Convert.ToInt32(sz.Hangredszer);
                 row.jarmuId = jarmuRow.Id;
                 dataset.SzemelyGepjarmu.Rows.Add(row);
+
             }
             else if (jarmu is KisteherGepjarmu)
             {
@@ -43,31 +59,74 @@ namespace AutosGyakorlo
                 row.onsuly = Convert.ToInt32(k.Onsuly);
                 row.jarmuId = jarmuRow.Id;
                 dataset.KisteherGepjarmu.Rows.Add(row);
+
             }
 
-            dataset.AcceptChanges();
-
-
-
-            using (SqlConnection conn = new SqlConnection(Properties.Settings.Default.Database1ConnectionString))
-            {
-                Database1DataSetTableAdapters.JarmuTableAdapter jta = new Database1DataSetTableAdapters.JarmuTableAdapter();
-                jta.Connection = conn;
-                Database1DataSetTableAdapters.SzemelyGepjarmuTableAdapter szta = new Database1DataSetTableAdapters.SzemelyGepjarmuTableAdapter();
-                szta.Connection = conn;
-
-                Database1DataSetTableAdapters.TableAdapterManager tam = new Database1DataSetTableAdapters.TableAdapterManager();
-                tam.Connection = conn;
-
-                tam.UpdateOrder = Database1DataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-
-                tam.SzemelyGepjarmuTableAdapter = szta;
-                tam.JarmuTableAdapter = jta;
-
-                tam.UpdateAll(dataset);
-            }
-            
+            tam.UpdateAll(dataset);
         }
-        
+
+        public List<SzemelyGepjarmu> SzemelyGepjarmuListaz()
+        {
+            Database1DataSet dataset = new Database1DataSet();
+            jta.Fill(dataset.Jarmu);
+            szta.Fill(dataset.SzemelyGepjarmu);
+            List<SzemelyGepjarmu> jarmuvek = new List<SzemelyGepjarmu>();
+
+            foreach (Database1DataSet.SzemelyGepjarmuRow row in dataset.SzemelyGepjarmu.Rows)
+            {
+                Database1DataSet.JarmuRow jarmuRow = row.JarmuRow;
+                SzemelyGepjarmu sz = new SzemelyGepjarmu();
+
+                JarmuInicializalas(sz, jarmuRow);
+                sz.Hangredszer = Convert.ToBoolean(row.hangredszer);
+
+                Felszereltseg f;
+                Felszereltseg.TryParse(row.felszereltseg, out f);
+                sz.Felszereltseg = f;
+
+                jarmuvek.Add(sz);
+            }
+
+            return jarmuvek;
+        }
+
+        public List<KisteherGepjarmu> KisteherGepjarmuListaz()
+        {
+            Database1DataSet dataset = new Database1DataSet();
+            jta.Fill(dataset.Jarmu);
+            kta.Fill(dataset.KisteherGepjarmu);
+            List<KisteherGepjarmu> jarmuvek = new List<KisteherGepjarmu>();
+
+            foreach (Database1DataSet.KisteherGepjarmuRow row in dataset.KisteherGepjarmu.Rows)
+            {
+                Database1DataSet.JarmuRow jarmuRow = row.JarmuRow;
+                KisteherGepjarmu k = new KisteherGepjarmu();
+
+                JarmuInicializalas(k, jarmuRow);
+
+                Kialakitas kia;
+                Kialakitas.TryParse(row.kialakitas, out kia);
+                k.Kialakitas = kia;
+
+                k.Onsuly = row.onsuly;
+
+                jarmuvek.Add(k);
+            }
+
+            return jarmuvek;
+        }
+
+        private void JarmuInicializalas(Jarmu jarmu, Database1DataSet.JarmuRow jarmuRow)
+        {
+            jarmu.Tipus = jarmuRow.tipus;
+            jarmu.Marka = jarmuRow.marka;
+            jarmu.FutottKm = jarmuRow.futottKm;
+            jarmu.Hengerurt = jarmuRow.hengerurt;
+            jarmu.HasznosTeher = jarmuRow.hasznosTeher;
+            jarmu.Rendszam = jarmuRow.rendszam;
+            jarmu.SzallithatoSzemelyek = jarmuRow.szallithatoSzemelyek;
+            jarmu.Alvazszam = jarmuRow.alvazszam;
+        }
+
     }
 }

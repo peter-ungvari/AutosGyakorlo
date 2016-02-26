@@ -256,7 +256,7 @@ namespace AutosGyakorlo {
             this.DataSetName = "Database1DataSet";
             this.Prefix = "";
             this.Namespace = "http://tempuri.org/Database1DataSet.xsd";
-            this.EnforceConstraints = true;
+            this.EnforceConstraints = false;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableJarmu = new JarmuDataTable();
             base.Tables.Add(this.tableJarmu);
@@ -264,13 +264,30 @@ namespace AutosGyakorlo {
             base.Tables.Add(this.tableKisteherGepjarmu);
             this.tableSzemelyGepjarmu = new SzemelyGepjarmuDataTable();
             base.Tables.Add(this.tableSzemelyGepjarmu);
+            global::System.Data.ForeignKeyConstraint fkc;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_KisteherGepjarmu_Jarmu", new global::System.Data.DataColumn[] {
+                        this.tableJarmu.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableKisteherGepjarmu.jarmuIdColumn});
+            this.tableKisteherGepjarmu.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.None;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_SzemelyGepjarmu_Jarmu", new global::System.Data.DataColumn[] {
+                        this.tableJarmu.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSzemelyGepjarmu.jarmuIdColumn});
+            this.tableSzemelyGepjarmu.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.None;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             this.relationFK_KisteherGepjarmu_Jarmu = new global::System.Data.DataRelation("FK_KisteherGepjarmu_Jarmu", new global::System.Data.DataColumn[] {
                         this.tableJarmu.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableKisteherGepjarmu.jarmuIdColumn}, false);
+            this.relationFK_KisteherGepjarmu_Jarmu.Nested = true;
             this.Relations.Add(this.relationFK_KisteherGepjarmu_Jarmu);
             this.relationFK_SzemelyGepjarmu_Jarmu = new global::System.Data.DataRelation("FK_SzemelyGepjarmu_Jarmu", new global::System.Data.DataColumn[] {
                         this.tableJarmu.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableSzemelyGepjarmu.jarmuIdColumn}, false);
+            this.relationFK_SzemelyGepjarmu_Jarmu.Nested = true;
             this.Relations.Add(this.relationFK_SzemelyGepjarmu_Jarmu);
         }
         
