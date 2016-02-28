@@ -29,12 +29,15 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.jarmuListBox = new System.Windows.Forms.ListBox();
+            this.fajtaComboBox = new System.Windows.Forms.ComboBox();
             this.deleteButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.KeresButton = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.ujSzemelygepjarmuButton = new System.Windows.Forms.Button();
+            this.ujKistehergepjarmuButton = new System.Windows.Forms.Button();
+            this.szerkesztButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,31 +51,33 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // listBox1
+            // jarmuListBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 85);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(1112, 316);
-            this.listBox1.TabIndex = 1;
-            this.listBox1.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
+            this.jarmuListBox.FormattingEnabled = true;
+            this.jarmuListBox.HorizontalScrollbar = true;
+            this.jarmuListBox.Location = new System.Drawing.Point(12, 85);
+            this.jarmuListBox.Name = "jarmuListBox";
+            this.jarmuListBox.Size = new System.Drawing.Size(1112, 316);
+            this.jarmuListBox.TabIndex = 1;
+            this.jarmuListBox.SelectedIndexChanged += new System.EventHandler(this.jarmuListBox_SelectedIndexChanged);
+            this.jarmuListBox.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
             // 
-            // comboBox1
+            // fajtaComboBox
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.fajtaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fajtaComboBox.FormattingEnabled = true;
+            this.fajtaComboBox.Items.AddRange(new object[] {
             "Személygépjármű",
             "Kisteher gépjármű"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 58);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(158, 21);
-            this.comboBox1.TabIndex = 2;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.fajtaComboBox.Location = new System.Drawing.Point(12, 58);
+            this.fajtaComboBox.Name = "fajtaComboBox";
+            this.fajtaComboBox.Size = new System.Drawing.Size(158, 21);
+            this.fajtaComboBox.TabIndex = 2;
+            this.fajtaComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // deleteButton
             // 
+            this.deleteButton.Enabled = false;
             this.deleteButton.Location = new System.Drawing.Point(234, 56);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(75, 23);
@@ -121,17 +126,51 @@
             0,
             0});
             // 
+            // ujSzemelygepjarmuButton
+            // 
+            this.ujSzemelygepjarmuButton.Location = new System.Drawing.Point(315, 56);
+            this.ujSzemelygepjarmuButton.Name = "ujSzemelygepjarmuButton";
+            this.ujSzemelygepjarmuButton.Size = new System.Drawing.Size(120, 23);
+            this.ujSzemelygepjarmuButton.TabIndex = 3;
+            this.ujSzemelygepjarmuButton.Text = "Új személygépjármű";
+            this.ujSzemelygepjarmuButton.UseVisualStyleBackColor = true;
+            this.ujSzemelygepjarmuButton.Click += new System.EventHandler(this.ujSzemelygepjarmuButton_Click);
+            // 
+            // ujKistehergepjarmuButton
+            // 
+            this.ujKistehergepjarmuButton.Location = new System.Drawing.Point(441, 56);
+            this.ujKistehergepjarmuButton.Name = "ujKistehergepjarmuButton";
+            this.ujKistehergepjarmuButton.Size = new System.Drawing.Size(120, 23);
+            this.ujKistehergepjarmuButton.TabIndex = 3;
+            this.ujKistehergepjarmuButton.Text = "Új kistehergépjármű";
+            this.ujKistehergepjarmuButton.UseVisualStyleBackColor = true;
+            this.ujKistehergepjarmuButton.Click += new System.EventHandler(this.ujKistehergepjarmuButton_Click);
+            // 
+            // szerkesztButton
+            // 
+            this.szerkesztButton.Enabled = false;
+            this.szerkesztButton.Location = new System.Drawing.Point(567, 56);
+            this.szerkesztButton.Name = "szerkesztButton";
+            this.szerkesztButton.Size = new System.Drawing.Size(75, 23);
+            this.szerkesztButton.TabIndex = 8;
+            this.szerkesztButton.Text = "Szerkeszt";
+            this.szerkesztButton.UseVisualStyleBackColor = true;
+            this.szerkesztButton.Click += new System.EventHandler(this.szerkesztButton_Click);
+            // 
             // JarmuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1136, 410);
+            this.Controls.Add(this.szerkesztButton);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.KeresButton);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.ujKistehergepjarmuButton);
+            this.Controls.Add(this.ujSzemelygepjarmuButton);
             this.Controls.Add(this.deleteButton);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.fajtaComboBox);
+            this.Controls.Add(this.jarmuListBox);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -148,12 +187,15 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ListBox jarmuListBox;
+        private System.Windows.Forms.ComboBox fajtaComboBox;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button KeresButton;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button ujSzemelygepjarmuButton;
+        private System.Windows.Forms.Button ujKistehergepjarmuButton;
+        private System.Windows.Forms.Button szerkesztButton;
 
 
     }

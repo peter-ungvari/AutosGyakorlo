@@ -161,14 +161,41 @@ namespace AutosGyakorlo
             jarmu.Alvazszam = jarmuRow.alvazszam;
         }
 
-        internal void Torol(SzemelyGepjarmu sz)
+        public void Torol(SzemelyGepjarmu sz)
         {
             szta.Delete(sz.Azon, sz.JarmuAzon, (int)sz.Felszereltseg, Convert.ToInt32(sz.Hangredszer));
         }
 
-        internal void Torol(KisteherGepjarmu k)
+        public void Torol(KisteherGepjarmu k)
         {
             kta.Delete(k.Azon, k.JarmuAzon, (int)k.Kialakitas, k.Onsuly);
+        }
+
+        public void Modosit(SzemelyGepjarmu sz)
+        {
+            Jarmu jarmu = (Jarmu)sz;
+            Modosit(jarmu);
+            szta.UpdateQuery(jarmu.JarmuAzon, (int)sz.Felszereltseg, Convert.ToInt32(sz.Hangredszer), sz.Azon);
+        }
+
+        public void Modosit(KisteherGepjarmu k)
+        {
+            Jarmu jarmu = (Jarmu)k;
+            Modosit(jarmu);
+            kta.UpdateQuery(jarmu.JarmuAzon, (int)k.Kialakitas, k.Onsuly, k.Azon);
+        }
+
+        private void Modosit(Jarmu jarmu)
+        {
+            jta.UpdateQuery(jarmu.Marka,
+                jarmu.Tipus,
+                jarmu.FutottKm,
+                jarmu.Hengerurt,
+                jarmu.Rendszam,
+                jarmu.Alvazszam,
+                jarmu.SzallithatoSzemelyek,
+                jarmu.HasznosTeher,
+                jarmu.JarmuAzon);
         }
     }
 }
