@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutosGyakorlo
 {
-   abstract class Jarmu
+   public abstract class Jarmu
     {
         int jarmuAzon;
 

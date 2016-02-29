@@ -6,6 +6,9 @@
 }
 
 namespace AutosGyakorlo.Database1DataSetTableAdapters {
+    partial class SzemelyGepjarmuTableAdapter
+    {
+    }
     
     
     public partial class KisteherGepjarmuTableAdapter {

@@ -34,11 +34,14 @@
             this.deleteButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.KeresButton = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.kmMinNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.ujSzemelygepjarmuButton = new System.Windows.Forms.Button();
             this.ujKistehergepjarmuButton = new System.Windows.Forms.Button();
             this.szerkesztButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.kmMaxNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.kmMinNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kmMaxNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -89,7 +92,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(829, 61);
+            this.label1.Location = new System.Drawing.Point(751, 61);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 4;
@@ -103,24 +106,25 @@
             this.KeresButton.TabIndex = 6;
             this.KeresButton.Text = "Keres";
             this.KeresButton.UseVisualStyleBackColor = true;
+            this.KeresButton.Click += new System.EventHandler(this.KeresButton_Click);
             // 
-            // numericUpDown1
+            // kmMinNumericUpDown
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(915, 59);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.kmMinNumericUpDown.Location = new System.Drawing.Point(837, 58);
+            this.kmMinNumericUpDown.Maximum = new decimal(new int[] {
             10000000,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.kmMinNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(128, 20);
-            this.numericUpDown1.TabIndex = 7;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.kmMinNumericUpDown.Name = "kmMinNumericUpDown";
+            this.kmMinNumericUpDown.Size = new System.Drawing.Size(91, 20);
+            this.kmMinNumericUpDown.TabIndex = 7;
+            this.kmMinNumericUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -157,14 +161,47 @@
             this.szerkesztButton.UseVisualStyleBackColor = true;
             this.szerkesztButton.Click += new System.EventHandler(this.szerkesztButton_Click);
             // 
+            // kmMaxNumericUpDown
+            // 
+            this.kmMaxNumericUpDown.Location = new System.Drawing.Point(950, 58);
+            this.kmMaxNumericUpDown.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.kmMaxNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.kmMaxNumericUpDown.Name = "kmMaxNumericUpDown";
+            this.kmMaxNumericUpDown.Size = new System.Drawing.Size(93, 20);
+            this.kmMaxNumericUpDown.TabIndex = 7;
+            this.kmMaxNumericUpDown.Value = new decimal(new int[] {
+            200000,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(934, 60);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(10, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "-";
+            // 
             // JarmuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1136, 410);
             this.Controls.Add(this.szerkesztButton);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.kmMaxNumericUpDown);
+            this.Controls.Add(this.kmMinNumericUpDown);
             this.Controls.Add(this.KeresButton);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ujKistehergepjarmuButton);
             this.Controls.Add(this.ujSzemelygepjarmuButton);
@@ -178,7 +215,8 @@
             this.Text = "Járművek";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kmMinNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kmMaxNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -192,10 +230,12 @@
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button KeresButton;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown kmMinNumericUpDown;
         private System.Windows.Forms.Button ujSzemelygepjarmuButton;
         private System.Windows.Forms.Button ujKistehergepjarmuButton;
         private System.Windows.Forms.Button szerkesztButton;
+        private System.Windows.Forms.NumericUpDown kmMaxNumericUpDown;
+        private System.Windows.Forms.Label label2;
 
 
     }

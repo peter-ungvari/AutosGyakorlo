@@ -13,7 +13,7 @@ namespace AutosGyakorlo
         Magas
     }
 
-    class SzemelyGepjarmu: Jarmu
+    public class SzemelyGepjarmu: Jarmu
     {
         int azon;
 

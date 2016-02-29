@@ -250,5 +250,20 @@ namespace AutosGyakorlo
             szerkesztButton.Enabled = enabled;
         }
 
+        private void KeresButton_Click(object sender, EventArgs e)
+        {
+            List<Jarmu> jarmuvek = ak.KeresFutottKmAlapjan((int)kmMinNumericUpDown.Value, (int)kmMaxNumericUpDown.Value);
+            if (jarmuvek.Count == 0)
+            {
+                MessageBox.Show(this, "Nincs a keresésnek megfelelő jármű", "Keresés", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                KeresForm keresForm = new KeresForm();
+                keresForm.Jarmuvek = jarmuvek;
+                keresForm.ShowDialog(this);
+            }
+        }
+
     }
 }

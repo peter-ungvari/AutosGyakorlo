@@ -197,5 +197,36 @@ namespace AutosGyakorlo
                 jarmu.HasznosTeher,
                 jarmu.JarmuAzon);
         }
+
+        public List<Jarmu> KeresFutottKmAlapjan(int futottKmMin, int futottKmMax) {
+            Database1DataSet ds = new Database1DataSet();
+            jta.FillByFutottKm(ds.Jarmu, futottKmMin, futottKmMax);
+            szta.FillByFutottKm(ds.SzemelyGepjarmu, futottKmMin, futottKmMax);
+            kta.FillByFutottKm(ds.KisteherGepjarmu, futottKmMin, futottKmMax);
+
+            List<Jarmu> jarmuvek = new List<Jarmu>();
+            foreach (Database1DataSet.KisteherGepjarmuRow row in ds.KisteherGepjarmu.Rows)
+            {
+                Database1DataSet.JarmuRow jarmuRow = row.JarmuRow;
+                KisteherGepjarmu k = new KisteherGepjarmu();
+                JarmuInicializalas(k, jarmuRow);
+                k.Azon = row.Id;
+                k.Kialakitas = (Kialakitas)row.kialakitas;
+                k.Onsuly = row.onsuly;
+                jarmuvek.Add(k);
+            }
+            foreach (Database1DataSet.SzemelyGepjarmuRow row in ds.SzemelyGepjarmu.Rows)
+            {
+                Database1DataSet.JarmuRow jarmuRow = row.JarmuRow;
+                SzemelyGepjarmu sz = new SzemelyGepjarmu();
+                JarmuInicializalas(sz, jarmuRow);
+                sz.Azon = row.Id;
+                sz.Hangredszer = Convert.ToBoolean(row.hangredszer);
+                sz.Felszereltseg = (Felszereltseg)row.felszereltseg;
+                jarmuvek.Add(sz);
+            }
+
+            return jarmuvek;
+        }
     }
 }

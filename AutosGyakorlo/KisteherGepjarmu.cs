@@ -14,7 +14,7 @@ namespace AutosGyakorlo
         ZartTeru
     }
     
-    class KisteherGepjarmu : Jarmu
+    public class KisteherGepjarmu : Jarmu
     {
 
         int azon;
