@@ -107,7 +107,7 @@ namespace AutosGyakorlo
                 SzemelyGepjarmu sz = new SzemelyGepjarmu();
                 JarmuAdatokFormbol(sz, form.jarmuControl);
 
-                sz.Hangredszer = form.hangrendszerCheckBox.Checked;
+                sz.Hangrendszer = form.hangrendszerCheckBox.Checked;
                 sz.Felszereltseg = (Felszereltseg)form.felszereltsegComboBox.SelectedIndex;
 
                 ak.Beszur(sz);
@@ -177,14 +177,10 @@ namespace AutosGyakorlo
 
         private void szerkesztButton_Click(object sender, EventArgs e)
         {
-            int szerkesztAzon;
-            int szerkesztJarmuAzon;
 
             if (jarmuListBox.SelectedItem is SzemelyGepjarmu)
             {
                 SzemelyGepjarmu sz = jarmuListBox.SelectedItem as SzemelyGepjarmu;
-                szerkesztAzon = sz.Azon;
-                szerkesztJarmuAzon = sz.JarmuAzon;
 
                 SzemelyGepjarmuForm form = new SzemelyGepjarmuForm();
                 form.Text = "Személygépjármű módosítása";
@@ -195,7 +191,7 @@ namespace AutosGyakorlo
                 {
                     JarmuAdatokFormbol(sz, form.jarmuControl);
 
-                    sz.Hangredszer = form.hangrendszerCheckBox.Checked;
+                    sz.Hangrendszer = form.hangrendszerCheckBox.Checked;
                     sz.Felszereltseg = (Felszereltseg)form.felszereltsegComboBox.SelectedIndex;
 
                     ak.Modosit(sz);
@@ -214,8 +210,6 @@ namespace AutosGyakorlo
             {
                 KisteherGepjarmu k = jarmuListBox.SelectedItem as KisteherGepjarmu;
                 KistehergepjarmuForm form = new KistehergepjarmuForm();
-                szerkesztAzon = k.Azon;
-                szerkesztJarmuAzon = k.JarmuAzon;
 
                 form.Text = "Kistehergépjármű módosítása";
                 JarmuAdatokFormba(k, form.jarmuControl);

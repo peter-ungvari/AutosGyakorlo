@@ -99,17 +99,11 @@
     <EmbeddedResource Include="JarmuControl.resx">
       <DependentUpon>JarmuControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="KeresForm.resx">
-      <DependentUpon>KeresForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="KistehergepjarmuForm.resx">
       <DependentUpon>KistehergepjarmuForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SzemelyGepjarmuForm.resx">
       <DependentUpon>SzemelyGepjarmuForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="JarmuvekForm.resx">
-      <DependentUpon>JarmuvekForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -138,10 +132,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Database1.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Database1_log.ldf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>Database1.mdf</DependentUpon>
     </Content>
   </ItemGroup>

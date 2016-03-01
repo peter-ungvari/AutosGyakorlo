@@ -8,14 +8,6 @@ namespace AutosGyakorlo
 {
    public abstract class Jarmu
     {
-        int jarmuAzon;
-
-        public int JarmuAzon
-        {
-            get { return jarmuAzon; }
-            set { jarmuAzon = value; }
-        }
-
         string marka;
 
         public string Marka

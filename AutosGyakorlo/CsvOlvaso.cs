@@ -66,7 +66,7 @@ namespace AutosGyakorlo
             JarmuAdatokatFeltolt(jarmu, oszlopok);
 
             jarmu.Felszereltseg = (Felszereltseg) Convert.ToInt32(oszlopok[9]);
-            jarmu.Hangredszer = Convert.ToBoolean(oszlopok[10]);
+            jarmu.Hangrendszer = Convert.ToBoolean(oszlopok[10]);
 
             return jarmu;
         }

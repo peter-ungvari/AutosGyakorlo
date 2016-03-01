@@ -15,14 +15,7 @@ namespace AutosGyakorlo
 
     public class SzemelyGepjarmu: Jarmu
     {
-        int azon;
-
-        public int Azon
-        {
-            get { return azon; }
-            set { azon = value; }
-        }
-
+        
         Felszereltseg felszereltseg;
 
         public Felszereltseg Felszereltseg
@@ -33,7 +26,7 @@ namespace AutosGyakorlo
 
         bool hangredszer;
 
-        public bool Hangredszer
+        public bool Hangrendszer
         {
             get { return hangredszer; }
             set { hangredszer = value; }
@@ -68,7 +61,7 @@ namespace AutosGyakorlo
         {
             return String.Format("Szemelygepjarmu: [marka: {0}, tipus: {1}, futottKm: {2}, hengerurt: {3}, " +
                     "rendszam: {4}, alvazszam: {5}, szallithato: {6}, hasznos teher: {7}, felszereltseg: {8}, hangrendszer: {9}]", 
-                    Marka, Tipus, FutottKm, Hengerurt, Rendszam, Alvazszam, SzallithatoSzemelyek, HasznosTeher, Felszereltseg, Hangredszer);
+                    Marka, Tipus, FutottKm, Hengerurt, Rendszam, Alvazszam, SzallithatoSzemelyek, HasznosTeher, Felszereltseg, Hangrendszer);
         }
     }
 }

@@ -16,15 +16,6 @@ namespace AutosGyakorlo
     
     public class KisteherGepjarmu : Jarmu
     {
-
-        int azon;
-
-        public int Azon
-        {
-            get { return azon; }
-            set { azon = value; }
-        }
-
         Kialakitas kialakitas;
 
         public Kialakitas Kialakitas
