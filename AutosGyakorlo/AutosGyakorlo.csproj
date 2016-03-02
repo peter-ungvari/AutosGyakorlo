@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdatbazisKezelo.cs" />
+    <Compile Include="AdatbazisKezeloGyarto.cs" />
     <Compile Include="CsvOlvaso.cs" />
     <Compile Include="JarmuControl.cs">
       <SubType>UserControl</SubType>
@@ -91,7 +93,6 @@
       <DependentUpon>SzemelyGepjarmuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Jarmu.cs" />
-    <Compile Include="JarmuAdatbazisKezelo.cs" />
     <Compile Include="KisteherGepjarmu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

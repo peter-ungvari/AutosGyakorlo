@@ -12,7 +12,8 @@ namespace AutosGyakorlo
 {
     public partial class JarmuForm : Form
     {
-        JarmuAdatbazisKezelo ak = new JarmuAdatbazisKezelo();
+        AdatbazisKezelo<SzemelyGepjarmu> szAbk = AdatbazisKezeloGyarto.UjSzemelygepjarmuAbk();
+        AdatbazisKezelo<KisteherGepjarmu> kAbk = AdatbazisKezeloGyarto.UjKisteherGepjarmuAbk();
 
         public JarmuForm()
         {
@@ -37,7 +38,14 @@ namespace AutosGyakorlo
 
             foreach (Jarmu jarmu in jarmuvek)
             {
-                ak.Beszur(jarmu);
+                if (jarmu is SzemelyGepjarmu)
+                {
+                    szAbk.Beszur(jarmu as SzemelyGepjarmu);
+                }
+                else
+                {
+                    kAbk.Beszur(jarmu as KisteherGepjarmu);
+                }
             }
 
             Frissit();
@@ -57,11 +65,11 @@ namespace AutosGyakorlo
         {
             if (fajtaComboBox.SelectedIndex == 0)
             {
-                jarmuListBox.DataSource = ak.SzemelyGepjarmuListaz();
+                jarmuListBox.DataSource = szAbk.Listaz();
             }
             else
             {
-                jarmuListBox.DataSource = ak.KisteherGepjarmuListaz();
+                jarmuListBox.DataSource = kAbk.Listaz();
             }
         }
 
@@ -70,12 +78,12 @@ namespace AutosGyakorlo
             if (jarmuListBox.SelectedItem is SzemelyGepjarmu)
             {
                 SzemelyGepjarmu sz = jarmuListBox.SelectedItem as SzemelyGepjarmu;
-                ak.Torol(sz);
+                szAbk.Torol(sz);
             }
             else if (jarmuListBox.SelectedItem is KisteherGepjarmu)
             {
                 KisteherGepjarmu k = jarmuListBox.SelectedItem as KisteherGepjarmu;
-                ak.Torol(k);
+                kAbk.Torol(k);
             }
 
             Frissit();
@@ -110,7 +118,7 @@ namespace AutosGyakorlo
                 sz.Hangrendszer = form.hangrendszerCheckBox.Checked;
                 sz.Felszereltseg = (Felszereltseg)form.felszereltsegComboBox.SelectedIndex;
 
-                ak.Beszur(sz);
+                szAbk.Beszur(sz);
 
                 if (fajtaComboBox.SelectedIndex == 1)
                 {
@@ -138,7 +146,7 @@ namespace AutosGyakorlo
                 k.Onsuly = (int)form.onsulyNumericUpDown.Value;
                 k.Kialakitas = (Kialakitas)form.kialakitasComboBox.SelectedIndex;
 
-                ak.Beszur(k);
+                kAbk.Beszur(k);
 
                 if (fajtaComboBox.SelectedIndex == 0)
                 {
@@ -185,6 +193,8 @@ namespace AutosGyakorlo
                 SzemelyGepjarmuForm form = new SzemelyGepjarmuForm();
                 form.Text = "Személygépjármű módosítása";
                 JarmuAdatokFormba(sz, form.jarmuControl);
+                form.hangrendszerCheckBox.Checked = sz.Hangrendszer;
+                form.felszereltsegComboBox.SelectedIndex = (int)sz.Felszereltseg;
                 DialogResult dr = form.ShowDialog(this);
 
                 if (dr == DialogResult.OK)
@@ -194,7 +204,7 @@ namespace AutosGyakorlo
                     sz.Hangrendszer = form.hangrendszerCheckBox.Checked;
                     sz.Felszereltseg = (Felszereltseg)form.felszereltsegComboBox.SelectedIndex;
 
-                    ak.Modosit(sz);
+                    szAbk.Modosit(sz);
 
                     if (fajtaComboBox.SelectedIndex == 1)
                     {
@@ -213,6 +223,8 @@ namespace AutosGyakorlo
 
                 form.Text = "Kistehergépjármű módosítása";
                 JarmuAdatokFormba(k, form.jarmuControl);
+                form.onsulyNumericUpDown.Value = k.Onsuly;
+                form.kialakitasComboBox.SelectedIndex = (int)k.Kialakitas;
                 DialogResult dr = form.ShowDialog(this);
 
                 if (dr == DialogResult.OK)
@@ -222,7 +234,7 @@ namespace AutosGyakorlo
                     k.Onsuly = (int)form.onsulyNumericUpDown.Value;
                     k.Kialakitas = (Kialakitas)form.kialakitasComboBox.SelectedIndex;
 
-                    ak.Modosit(k);
+                    kAbk.Modosit(k);
 
                     if (fajtaComboBox.SelectedIndex == 0)
                     {
@@ -246,7 +258,20 @@ namespace AutosGyakorlo
 
         private void KeresButton_Click(object sender, EventArgs e)
         {
-            List<Jarmu> jarmuvek = ak.KeresFutottKmAlapjan((int)kmMinNumericUpDown.Value, (int)kmMaxNumericUpDown.Value);
+            Dictionary<string, object> parameterek = new Dictionary<string, object>();
+            parameterek.Add("@min", (int)kmMinNumericUpDown.Value);
+            parameterek.Add("@max", (int)kmMaxNumericUpDown.Value);
+            List<Jarmu> jarmuvek = new List<Jarmu>(szAbk.Keres(
+                    @"select *
+                    from jarmu j
+                    join szemelygepjarmu sz on j.alvazszam = sz.alvazszam
+                    where futottKm between @min and @max", parameterek));
+            jarmuvek.AddRange(kAbk.Keres(
+                    @"select *
+                    from jarmu j
+                    join kistehergepjarmu k on j.alvazszam = k.alvazszam
+                    where futottKm between @min and @max", parameterek));
+
             if (jarmuvek.Count == 0)
             {
                 MessageBox.Show(this, "Nincs a keresésnek megfelelő jármű", "Keresés", MessageBoxButtons.OK, MessageBoxIcon.Information);
