@@ -90,9 +90,13 @@ namespace AutosGyakorlo
             using (var conn = KapcsolatLetrehoz())
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand(listazSql, conn))
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    parameterek.Select(param => cmd.Parameters.AddWithValue(param.Key, param.Value));
+                    foreach (var param in parameterek)
+                    {
+                        cmd.Parameters.AddWithValue(param.Key, param.Value);
+                    }
+
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<T> eredmeny = new List<T>();
